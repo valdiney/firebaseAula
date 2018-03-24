@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div class="app">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 div-content center-div">
+                    <div style="padding:10px">
+                        <h3>Fire App IoT</h3>
+                        <center class="sub-title">Comunicação via Firebase</center>
+                    </div>
+
+                    <hr>
+
+                    <center><b class="caption_status-led"></b></center>
+                    <br>
+
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <button class="btn btn-success btn-ligar" style="width:100%">LIGAR</button>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-warning btn-desligar" style="width:100%">DESLIGAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+	<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script>
+      
+    window.onload = function() {
+
+        var config = {
+            apiKey: "AIzaSyB19kLxLsgrUtfFK48J74H1y982XCw0wm8",
+            authDomain: "iotssa-28bc8.firebaseapp.com",
+            databaseURL: "https://iotssa-28bc8.firebaseio.com",
+            projectId: "iotssa-28bc8",
+            storageBucket: "iotssa-28bc8.appspot.com",
+            messagingSenderId: "412229994239"
+        };
+
+        firebase.initializeApp(config);
+
+        get_status();
+
+        var btn_ligar = document.querySelector(".btn-ligar"),
+            btn_desligar = document.querySelector(".btn-desligar"),
+            caption_status_led = document.querySelector(".caption_status-led");
+            
+            //Ligar Led
+            btn_ligar.addEventListener("click", function() {
+
+                firebase.database().ref("led").set({
+                    status: 1
+                });
+
+            });
+            
+            //Desligar Led
+            btn_desligar.addEventListener("click", function() {
+
+                firebase.database().ref("led").set({
+                    status: 0
+                });
+
+            });
+            
+            //Pega o Status do Led
+            function get_status() {
+
+                var ref = firebase.database().ref();
+
+                ref.on("value", function(snapshot) {
+
+                    var objeto = snapshot.val(),
+                        status_led = objeto.led.status;
+                        
+                    if (status_led == 1) {
+                        caption_status_led.innerHTML = "LED LIGADO";
+                    } else if (status_led == 0) {
+                        caption_status_led.innerHTML = "LED DESLIGADO";
+                    } else {
+                        caption_status_led.innerHTML = "STATUS NÃO IDENTIFICADO";
+                    }
+
+                });
+            }
+    }
+
+
+    </script>
+
+</body>
+</html>
