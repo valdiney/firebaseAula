@@ -20,8 +20,8 @@
 #define FIREBASE_HOST "iotssa-28bc8.firebaseio.com"
 #define FIREBASE_AUTH "AIzaSyB19kLxLsgrUtfFK48J74H1y982XCw0wm8"
 
-const char* WIFI_SSID = "Ransomware-Infra";
-const char* WIFI_PASSWORD = "*Xl0g1cm@st3r*";
+const char* WIFI_SSID = "";
+const char* WIFI_PASSWORD = "";
 
 int pin = 13;
 
